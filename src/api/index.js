@@ -23,3 +23,9 @@ const apiUrl = config.API_BASE_URL;
     //       console.log("12123")
     //     });
 }
+
+export function getStudentList(){
+    this.axios({
+        
+    })
+}
