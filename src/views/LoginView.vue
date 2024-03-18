@@ -37,7 +37,7 @@
 
 <script>
 import backgroundImage from "../assets/LoginView.jpg";
-
+import {loginq} from "../api/index.js"
 export default {
   name: 'Login',
   data() {
@@ -49,12 +49,13 @@ export default {
 
   //页面加在的时候，做一些事情，在created里面
   created() {
-
+loginq()
   },
 
   methods: {
   
   login() {
+    
   if (this.admin.name === 'Admin' && this.admin.password === '123456') {
     this.$message({
       message: '登录成功',
