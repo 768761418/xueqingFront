@@ -25,7 +25,12 @@ const apiUrl = config.API_BASE_URL;
 }
 
 export function getStudentList(){
-    this.axios({
+    axios({
+        method:"get",
+        url:"/stu/list/1/20"
         
+    }).then(res => {
+        return res
     })
+    
 }

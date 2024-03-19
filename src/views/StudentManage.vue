@@ -100,7 +100,7 @@
   
   <script>
 //   import request from '@/utils/request';
-  
+  import { getStudentList } from '@/api';
   export default {
     name: 'HomeView',
     data() {
@@ -124,6 +124,7 @@
     //页面加载的时候，做的一些事情，在create()里面
     created() {
       this.load();
+      
     },
   
   methods: {
