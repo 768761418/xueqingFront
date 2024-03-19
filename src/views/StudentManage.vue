@@ -171,7 +171,7 @@ export default {
         }
 
       }).then(res => {
-        return res
+        console.log(res)
       })
       // request.get("/admin/searchbyid", {
       //   params: this.paramid
