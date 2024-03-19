@@ -26,8 +26,7 @@
       <!-- 侧边栏导航 -->
       <div style="width: 200px; min-height: calc(100vh - 62px); height: 200px; overflow: hidden; margin-right: 2px; background-color: 2a82e4;">
         <el-menu 
-        :default-active="$route.path" 
-        :default-openeds="['/']" 
+        :default-active="$route.path"
         router class="el-menu-demo"
         default active="1">
 
