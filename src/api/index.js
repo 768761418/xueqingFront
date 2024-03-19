@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const apiUrl = config.API_BASE_URL;
 
- export function loginq(){
+export function loginq() {
     console.log("12123")
     // axios({
     //     method: method,
@@ -24,13 +24,12 @@ const apiUrl = config.API_BASE_URL;
     //     });
 }
 
-export function getStudentList(){
+export function getStudentList() {
     axios({
-        method:"get",
-        url:"/stu/list/1/20"
-        
+        method: "get",
+        url: "/stu/list/1/20"
+
     }).then(res => {
         return res
     })
-    
 }
