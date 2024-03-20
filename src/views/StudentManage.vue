@@ -18,14 +18,14 @@
       <el-button type="primary" @click="reset()">清空</el-button>
       <el-button type="primary" style="margin-left: 10px" @click="add()">新增</el-button>
     </div>
-    <div style="margin-bottom: 20px;">
+    <!-- <div style="margin-bottom: 20px;">
       <el-input v-model="params.name" style="width: 125px" placeholder="姓名"></el-input>
       <el-input v-model="params.phone" style="width: 125px; margin-left: 5px"
         placeholder="电话"></el-input>
       <el-button type="primary" style="margin-left: 10px"
         @click="findBySearch()">查询</el-button>
       <el-button type="primary" @click="reset()">清空</el-button>
-    </div>
+    </div> -->
 
     <!-- 信息表格 -->
     <el-table :data="tableData" stripe>
@@ -150,15 +150,19 @@ export default {
 
     //搜索
     findBySearch() {
-      request.get("/admin/search", {
-        params: this.params
-      }).then(res => {
-        if (res.code === '0') {
-          this.tableData = res.data.list;
-          this.total = res.data.total;
-        } else {
-
+      console.log(this.params)
+      axios({
+        method: "get",
+        url: "/stu/search/",
+        params: {
+          page: this.params.pageNum,
+          size: this.params.pageSize,
+          value: ""
         }
+      }).then(res => {
+        console.log(res.data.data)
+        this.tableData = res.data.data.data
+        this.total = res.data.data.total
       })
     },
     findById() {
@@ -167,28 +171,24 @@ export default {
         method: "get",
         url: "/stu/search",
         params: {
-          key: this.paramid.id
+          key: "stu_id",
+          page: 1,
+          size: 20,
+          value: this.paramid.id
         }
 
       }).then(res => {
         console.log(res)
+        this.tableData = res.data.data.data
+        this.total = res.data.data.total
       })
-      // request.get("/admin/searchbyid", {
-      //   params: this.paramid
-      // }).then(res => {
-      //   if (res.code === '0') {
-      //     this.tableData = res.data;
-      //   } else {
-
-      //   }
-      // })
     },
 
     //清空输入框
     reset() {
       this.paramid = { id: '' },
         this.params = {
-          name: '',
+          id: '',
           phone: '',
           pageNum: 1,
           pageSize: 20,
@@ -208,20 +208,20 @@ export default {
 
     //删除
     del(id) {
-      request.delete("/admin/" + id).then(res => {
-        if (res.code === '0') {
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          });
-          this.findBySearch();
-        } else {
-          this.$message({
-            message: res.msg,
-            type: 'success'
-          });
-        }
-      })
+      // request.delete("/admin/" + id).then(res => {
+      //   if (res.code === '0') {
+      //     this.$message({
+      //       message: '删除成功',
+      //       type: 'success'
+      //     });
+      //     this.findBySearch();
+      //   } else {
+      //     this.$message({
+      //       message: res.msg,
+      //       type: 'success'
+      //     });
+      //   }
+      // })
     },
 
     //添加
@@ -230,29 +230,41 @@ export default {
       this.dialogFormVisible = true;
     },
     edit(obj) {
-      this.form = obj;
+      let newObj = JSON.parse(JSON.stringify(obj))
+      this.form = newObj;
       this.dialogFormVisible = true;
     },
     submit() {
-      request.post("/admin/add", this.form).then(res => {
-        if (res.code === '0') {
-          this.$message({
-            message: "成功",
-            type: 'success',
-          })
+      // request.post("/admin/add", this.form).then(res => {
+      //   if (res.code === '0') {
+      //     this.$message({
+      //       message: "成功",
+      //       type: 'success',
+      //     })
+      //     this.dialogFormVisible = false;
+      //     this.findBySearch();
+      //   } else {
+      //     this.$message({
+      //       message: res.message,
+      //       type: 'success',
+      //     })
+      //   }
+      // })
+      console.log(this.form)
+      axios({
+        method: "post",
+        url: "/stu/update",
+        data: this.form
+      }).then(res => {
+        console.log(res)
+        if (res.data.mess == "success") {
+          this.$message.success("修改成功")
+          this.findById();
           this.dialogFormVisible = false;
-          this.findBySearch();
         } else {
-          this.$message({
-            message: res.message,
-            type: 'success',
-          })
+          this.$message.error("修改失败")
         }
-
       })
-
-
-
     }
   }
 
